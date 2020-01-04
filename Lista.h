@@ -21,6 +21,8 @@ public:
 	bool estaVacia() const;
 	void imprimir() const;
 	void imprimirReves(NodoLista< TIPONODO >*) const;
+	NodoLista< TIPONODO >* buscarNodo(NodoLista< TIPONODO >*, const int&) const;
+
 
 	NodoLista< TIPONODO >* obtenerPrimeroPtr() const;
 	NodoLista< TIPONODO >* obtenerUltimoPtr() const;
@@ -207,5 +209,19 @@ inline NodoLista<TIPONODO>* Lista<TIPONODO>::obtenerUltimoPtr() const
 {
 	return this->ultimoPtr;
 }
+
+
+template<typename TIPONODO>
+inline NodoLista<TIPONODO>* Lista<TIPONODO>::buscarNodo(NodoLista<TIPONODO>* nodoActual, const int& clave) const
+{
+	if (nodoActual->obtenerDatos() == clave)
+		return nodoActual;
+	if (nodoActual->obtenerSiguientePtr() == NULL)
+		return NULL;
+	else
+		return buscarNodo(nodoActual->obtenerSiguientePtr(), clave);
+}
+
+
 
 #endif
