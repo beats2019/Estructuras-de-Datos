@@ -13,19 +13,7 @@ int main()
 	miArbol.insertarNodo(10);
 	miArbol.insertarNodo(5);
 	miArbol.insertarNodo(15);
-	/*
-	miArbol.insertarNodo(3);
-	miArbol.insertarNodo(24);
-	miArbol.insertarNodo(18);
-	miArbol.insertarNodo(31);
-	miArbol.insertarNodo(35);
-	miArbol.insertarNodo(29);
-	miArbol.insertarNodo(24);
-	miArbol.insertarNodo(27);*/
 
 	miArbol.eliminarNodo(10);
 	miArbol.recorridoInOrden();
-	
-	
-	
 }

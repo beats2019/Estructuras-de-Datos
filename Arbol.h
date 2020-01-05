@@ -187,14 +187,29 @@ inline void Arbol<TIPONODO>::eliminarNodo(const int& dataNodo)
 		base->datos = hijo->datos; //Se genera el duplicado
 
 		if (padre->derechoPtr == hijo) // El arbol tiene nivel 1
+		{
 			if (hijo->estaNodoVacio())
+			{
 				padre->derechoPtr = NULL;
+				hijo->CommitSuicide();
+			}
 			else
+			{
 				padre->derechoPtr = hijo->derechoPtr;
-		else if (hijo->estaNodoVacio()) //El arbol tiene nivel > 1
+				hijo->CommitSuicide();
+			}
+		}
+		else if (hijo->estaNodoVacio()) //Nodo hoja
+		{
 			padre->izquierdoPtr = NULL;
+			hijo->CommitSuicide();
+		}
 		else //Con un hijo derecho
+		{
 			padre->izquierdoPtr = hijo->derechoPtr;
+			hijo->CommitSuicide();
+		}
+
 	}
 }
 #endif
