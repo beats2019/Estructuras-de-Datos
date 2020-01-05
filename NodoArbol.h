@@ -13,7 +13,10 @@ public:
 		derechoPtr(NULL),
 		datos(data)
 	{}
-
+	void CommitSuicide()
+	{
+		delete this;
+	}
 	TIPONODO obtenerDatos()const
 	{
 		return datos;
@@ -21,10 +24,7 @@ public:
 
 	bool estaNodoVacio()const
 	{
-		if (izquierdoPtr == NULL and derechoPtr == NULL)
-			return true;
-		else
-			return false;
+		return (izquierdoPtr == NULL and derechoPtr == NULL);
 	}
 
 

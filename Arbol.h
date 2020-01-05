@@ -14,13 +14,17 @@ public:
 	void recorridoPostOrden() const;
 	NodoArbol<TIPONODO>* obtenerRaiz() const;
 	int obtenerNivel()const;
+	void eliminarNodo(const int&);
+
 private:
 	NodoArbol<TIPONODO>* raizPtr;
 	void ayudanteInsertarNodo(NodoArbol<TIPONODO>**, const TIPONODO&);
 	void ayudantePreOrden(NodoArbol<TIPONODO>*) const;
 	void ayudanteInOrden(NodoArbol<TIPONODO>*) const;
 	void ayudantePostOrden(NodoArbol<TIPONODO>*) const;
-	void ayudanteObtenerNivel(NodoArbol<TIPONODO>*,int&) const;
+	void ayudanteObtenerNivel(NodoArbol<TIPONODO>*, int&) const;
+	NodoArbol< TIPONODO >* buscarNodo(NodoArbol< TIPONODO >*, const int&) const;
+
 };
 
 template<typename TIPONODO>
@@ -44,7 +48,7 @@ void Arbol<TIPONODO>::ayudanteInsertarNodo(NodoArbol<TIPONODO>** ptr, const TIPO
 	{
 		if (valor < (*ptr)->datos)
 			ayudanteInsertarNodo(&(*ptr)->izquierdoPtr, valor);
-		else if(valor >= (*ptr)->datos)
+		else if (valor >= (*ptr)->datos)
 			ayudanteInsertarNodo(&(*ptr)->derechoPtr, valor);
 	}
 }
@@ -76,7 +80,7 @@ void Arbol<TIPONODO>::ayudanteInOrden(NodoArbol<TIPONODO>* ptr) const
 		cout << ptr->datos << ' ';
 		ayudanteInOrden(ptr->derechoPtr);
 	}
-	
+
 }
 
 template<typename TIPONODO>
@@ -94,7 +98,7 @@ template<typename TIPONODO>
 void Arbol<TIPONODO>::ayudantePostOrden(NodoArbol<TIPONODO>* ptr) const
 {
 	if (ptr != nullptr)
-	{		
+	{
 		ayudantePostOrden(ptr->izquierdoPtr);
 		ayudantePostOrden(ptr->derechoPtr);
 		cout << ptr->datos << ' ';
@@ -135,11 +139,62 @@ inline void Arbol<TIPONODO>::ayudanteObtenerNivel(NodoArbol<TIPONODO>* nodoBaseP
 			ayudanteObtenerNivel(nodoBasePtr->izquierdoPtr, ++nivelActual);
 			subIzq = nivelActual;
 		}
-			
+
 	}
 	nivelActual = (subDer > subIzq ? subDer : subIzq);
-		
+
 }
 
+template<typename TIPONODO>
+inline NodoArbol<TIPONODO>* Arbol<TIPONODO>::buscarNodo(NodoArbol<TIPONODO>* nodoActual, const int& clave) const
+{
+	NodoArbol<TIPONODO>* a = NULL;
+	NodoArbol<TIPONODO>* b = NULL;
+	if (nodoActual->datos == clave)
+		return nodoActual;
+	if (nodoActual->izquierdoPtr == NULL and nodoActual->derechoPtr == NULL)
+		return NULL;
+	else
+	{
+		if (nodoActual->izquierdoPtr != NULL)
+			a = buscarNodo(nodoActual->izquierdoPtr, clave);
+		if (nodoActual->derechoPtr != NULL)
+			b = buscarNodo(nodoActual->derechoPtr, clave);
+	}
+	if (a == NULL and b == NULL)
+		return NULL;
+	else
+		return (a != NULL ? a : b);
+}
 
+template<typename TIPONODO>
+inline void Arbol<TIPONODO>::eliminarNodo(const int& dataNodo)
+{
+	NodoArbol<TIPONODO>* base = buscarNodo(this->raizPtr, dataNodo);
+	if (base == NULL)
+		cout << "El nodo que intentaste eliminar no existe" << endl;
+	else
+	{
+		NodoArbol<TIPONODO>* padre = base;
+		NodoArbol<TIPONODO>* hijo = base;
+
+		hijo = base->derechoPtr;
+		while (hijo->izquierdoPtr != NULL)
+		{
+			padre = hijo;
+			hijo = hijo->izquierdoPtr;
+		}
+		base->datos = hijo->datos; //Se genera el duplicado
+
+		if (padre->derechoPtr == hijo) // El arbol tiene nivel 1
+			if (hijo->estaNodoVacio())
+				padre->derechoPtr = NULL;
+			else
+				padre->derechoPtr = hijo->derechoPtr;
+		else if (hijo->estaNodoVacio()) //El arbol tiene nivel > 1
+			padre->izquierdoPtr = NULL;
+		else //Con un hijo derecho
+			padre->izquierdoPtr = hijo->derechoPtr;
+	}
+}
 #endif

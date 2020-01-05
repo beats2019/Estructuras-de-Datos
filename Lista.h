@@ -93,22 +93,22 @@ void Lista< TIPONODO >::insertarAlFinal(const TIPONODO& valor)
 template< typename TIPONODO >
 bool Lista< TIPONODO >::eliminarDelFrente(TIPONODO& valor)
 {
-	if (estaVacia()) // la Lista está vacía
-		return false; // la eliminación no tuvo éxito
+	if (estaVacia()) 
+		return false;
 	else
 	{
-		NodoLista< TIPONODO >* tempPtr = primeroPtr; // contiene tempPtr a eliminar
+		NodoLista< TIPONODO >* tempPtr = primeroPtr; 
 
 		if (primeroPtr == ultimoPtr)
-			primeroPtr = ultimoPtr = 0; // no hay nodos después de la eliminación
+			primeroPtr = ultimoPtr = 0; 
 		else
-			primeroPtr = primeroPtr->siguientePtr; // apunta al nodo que antes era el segundo
+			primeroPtr = primeroPtr->siguientePtr; 
 
-		valor = tempPtr->datos; // devuelve los datos que se van a eliminar
-		delete tempPtr; // reclama el nodo que antes era el primero
-		return true; // la eliminación tuvo éxito
-	} // fin de else
-} // fin de la función eliminarDelFrente
+		valor = tempPtr->datos; 
+		delete tempPtr; 
+		return true; 
+	} 
+} 
 
 
 template< typename TIPONODO >
