@@ -7,13 +7,21 @@ using std::string;
 #include "NodoArbol.h"
 #include "Arbol.h"
 
+
+
 int main()
 {
 	Arbol<int> miArbol;
-	miArbol.insertarNodo(10);
-	miArbol.insertarNodo(5);
-	miArbol.insertarNodo(15);
+	Cola<NodoArbol<int>> miCola;
 
-	miArbol.eliminarNodo(10);
-	miArbol.recorridoInOrden();
+	miArbol.insertarNodo(10);
+	miArbol.insertarNodo(15);
+	miArbol.insertarNodo(5);
+	miArbol.insertarNodo(7);
+	miArbol.insertarNodo(1);
+	
+
+	miArbol.imprimirRecorridoNivel();
+
+
 }

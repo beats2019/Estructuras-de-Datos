@@ -2,6 +2,8 @@
 #define ARBOL_H
 
 #include "NodoArbol.h"
+#include "Cola.h"
+
 
 template<typename TIPONODO>
 class Arbol
@@ -15,6 +17,7 @@ public:
 	NodoArbol<TIPONODO>* obtenerRaiz() const;
 	int obtenerNivel()const;
 	void eliminarNodo(const int&);
+	void imprimirRecorridoNivel() const;
 
 private:
 	NodoArbol<TIPONODO>* raizPtr;
@@ -212,4 +215,27 @@ inline void Arbol<TIPONODO>::eliminarNodo(const int& dataNodo)
 
 	}
 }
+
+template<typename TIPONODO>
+inline void Arbol<TIPONODO>::imprimirRecorridoNivel() const
+{
+	Cola<NodoArbol<TIPONODO>*> miCola;
+	NodoArbol<TIPONODO>* nodoActual = NULL;
+	
+	miCola.enqueue(raizPtr);
+	while (!miCola.estaColaVacia())
+	{
+		miCola.dequeue(nodoActual);
+		cout << nodoActual->datos << " ";
+		if (nodoActual->izquierdoPtr != NULL)
+			miCola.enqueue(nodoActual->izquierdoPtr);
+		if (nodoActual->derechoPtr != NULL)
+			miCola.enqueue(nodoActual->derechoPtr);
+	}
+}
+
+
+
+
+
 #endif

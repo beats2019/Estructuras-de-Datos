@@ -3,6 +3,8 @@
 
 #include "Lista.h"
 #include "Cliente.h"
+#include "NodoArbol.h"
+
 
 template <typename TIPOCOLA>
 class Cola : private Lista<TIPOCOLA>
